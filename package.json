@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",
-    "body-parser": "*",
+    "body-parser": ">=1.17.1",
     "express": "*",
     "express-session": "^1.15.1",
     "file-system": "^2.2.2",

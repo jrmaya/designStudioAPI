@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
-var bodyParser  = require('body-Parser'); //to json
+var bodyParser  = require('body-parser'); //to json
 var fs = require('file-system');
 
 //use multer to upload files to server and save with the proper extention

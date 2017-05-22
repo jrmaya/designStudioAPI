@@ -11,7 +11,7 @@ var mongoose    = require('mongoose'); //db manager
 //var passport    = require('passport');
 //var flash       = require('connect-flash');
 
-var bodyParser  = require('body-Parser'); //to json
+var bodyParser  = require('body-parser'); //to json
 var morgan      = require('morgan');
 //var session     = require('express-session');
 
