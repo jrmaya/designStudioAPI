@@ -1,34 +1,30 @@
-var mongoose    = require('mongoose');
-var schema      = mongoose.Schema;
+var mongoose = require('mongoose');
+var schema = mongoose.Schema;
 
-var bcrypt      = require('bcrypt');
+var bcrypt = require('bcrypt');
 
 //get garmentSchema & paletteSchema for the user
-var Template    = require('./product');
-var Palette     = require('./palette');
+var Template = require('./product');
+var Palette = require('./palette');
 
 
 var UserSchema = new schema(
     {
-    name: { type: String, required: false },
-    productionId: { type: String, required: false }, 
-    lastname: { type: String, required: false },    
-    school: { type: String, required: false },
-    email: { type: String, required: false },
-    pass: { type: String, required: false },
-    palette: [
+        name: {type: String, required: false},
+        productionId: {type: String, required: false},
+        lastname: {type: String, required: false},
+        school: {type: String, required: false},
+        email: {type: String, required: false},
+        pass: {type: String, required: false},
+        templates: [
             {
-                type: mongoose.Schema.Types.ObjectId, ref: 'PalettetSchema'
+                type: mongoose.Schema.Types.ObjectId, ref: 'ProductTemplateSchema'
             }
         ],
-    templates: [
-        {
-            type: mongoose.Schema.Types.ObjectId, ref: 'ProductTemplateSchema'
-        }
-    ]    
-});
+        role: {type: String, required: true}
+    });
 
-UserSchema.methods.generateHash = function(password){
+UserSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
 }
 

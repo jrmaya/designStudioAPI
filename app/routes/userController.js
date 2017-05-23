@@ -52,29 +52,37 @@ router.get('/users/:user_id', (req, res)=>{
 
 
 //CREATE NEW USER
-router.post('/newUser', function(req, res, next){
+router.post('/register-school', function(req, res, next){
         //Get user details
         var name            = req.body.name;
         var lastname        = req.body.lastname;
         var school          = req.body.school; 
         var email           = req.body.email;
         var pass            = req.body.pass;
+        var role            = req.body.role;
 
+        if(role.toLowerCase() != "school") {
+            res.status(400).json({
+                message: "Expecting role as school"
+            });
+        } else {
+            //Do validation
+            if (!name){
+                res.json({message: "Sorry, the post cannot be done with empy values"});
+            } else{
+                //Create new user and save usr and check for err
+                var user            = new User();
+                user.name           = name;
+                user.lastname       = lastname;
+                user.school         = school;
+                user.email          = email;
+                user.role           = role;
+                user.pass           = user.generateHash(pass);
 
-        //Do validation
-        if (!name){
-            res.json({message: "Sorry, the post cannot be done with empy values"});
-        }else{
-            //Create new user and save usr and check for err 
-            var user            = new User();
-            user.name           = name;
-            user.lastname       = lastname;
-            user.school         = school;
-            user.email          = email;
-            user.pass           = user.generateHash(pass);
-     
-            user.save().then(res.json({message: 'User created successfully! '}));
+                user.save().then(res.json({message: 'User created successfully! '}));
+            }
         }
+
     })
 
 //Update user
