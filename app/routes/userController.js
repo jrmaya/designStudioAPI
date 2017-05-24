@@ -61,7 +61,7 @@ router.post('/register-school', function(req, res, next){
         var pass            = req.body.pass;
         var role            = req.body.role;
 
-        if(role.toLowerCase() != "school") {
+        if(role.toLowerCase() !== "school") {
             res.status(400).json({
                 message: "Expecting role as school"
             });
@@ -79,14 +79,32 @@ router.post('/register-school', function(req, res, next){
                 user.role           = role;
                 user.pass           = user.generateHash(pass);
 
-                user.save().then(res.json({message: 'User created successfully! '}));
+                user.save(function(err) {
+                    if(err === null) {
+                        res.json({message: "User was successfully created"});
+                    } else {
+                        res.json(err.errors);
+                    }
+                });
             }
         }
 
-    })
+    });
 
-//Update user
-.put('/users/:user_id', (req, res)=>{
+router.post('/check-email', function(req, res, next) {
+    User.findOne({email: req.body.email}, function(err, user){
+        if (err) {return err}
+        else{
+            if(user.email == null){
+                res.send({message: "available"});
+            }else{
+                res.send({'message': "taken"});
+            }
+        }
+    });
+});
+
+router.put('/users/:user_id', (req, res)=>{
         User.findById(req.params.user_id, (e, user)=>{
         if(e)
             res.send(e);
@@ -98,10 +116,10 @@ router.post('/register-school', function(req, res, next){
             user.pass = req.body.pass;
             user.save().then(res.json({message: 'User updated successfully! '+ user}));
     }); 
-})
+});
 
 // Delete user
-.delete('/users/:user_id', function (req, res) {
+router.delete('/users/:user_id', function (req, res) {
 
     User.remove({
             "_id": req.params.user_id

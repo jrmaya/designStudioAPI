@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
-var schema = mongoose.Schema;
-
+var uniqueValidator = require('mongoose-unique-validator');
 var bcrypt = require('bcrypt');
 
-//get garmentSchema & paletteSchema for the user
 var Template = require('./product');
 var Palette = require('./palette');
 
+var schema = mongoose.Schema;
 
 var UserSchema = new schema(
     {
@@ -14,7 +13,7 @@ var UserSchema = new schema(
         productionId: {type: String, required: false},
         lastname: {type: String, required: false},
         school: {type: String, required: false},
-        email: {type: String, required: false},
+        email: {type: String, required: false, unique: true},
         pass: {type: String, required: false},
         templates: [
             {
@@ -26,6 +25,8 @@ var UserSchema = new schema(
 
 UserSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
-}
+};
+
+UserSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
 module.exports = mongoose.model('User', UserSchema);
