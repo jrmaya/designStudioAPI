@@ -83,7 +83,7 @@ router.post('/register-school', function(req, res, next){
                     if(err === null) {
                         res.json({message: "User was successfully created"});
                     } else {
-                        res.json(err.errors);
+                        res.status(500).json(err.errors);
                     }
                 });
             }
