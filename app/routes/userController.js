@@ -58,7 +58,7 @@ router.post('/register-school', function(req, res, next){
         var lastname        = req.body.lastname;
         var school          = req.body.school; 
         var email           = req.body.email;
-        var pass            = req.body.pass;
+        var password            = req.body.password;
         var role            = req.body.role;
 
         if(role.toLowerCase() !== "school") {
@@ -77,7 +77,7 @@ router.post('/register-school', function(req, res, next){
                 user.school         = school;
                 user.email          = email;
                 user.role           = role;
-                user.pass           = user.generateHash(pass);
+                user.password       = user.generateHash(password);
 
                 user.save(function(err) {
                     if(err === null) {
