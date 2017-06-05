@@ -27,13 +27,12 @@ app.use(bodyParser.json());
 //API ROUTES
 
 router.post('/', function(req, res){
-    User.findOne({ "name" : req.body.username }, function(err, user){
+    User.findOne({ "email" : req.body.username }, function(err, user){
         if (err) throw err;
         if (!user){
-            res.json({ message: "The user couldnt be found" });
+            res.json({ message: "The user couldn't be found" });
         } else {
-            //if pass wrong reject, else assign token
-            bcrypt.compare(req.body.password, user.pass, function(err, doesMatch){
+            bcrypt.compare(req.body.password, user.password, function(err, doesMatch){
                 if(doesMatch){
                     var token = jwt.sign(user, process.env.SECRET_KEY, {
                     });
@@ -44,6 +43,7 @@ router.post('/', function(req, res){
                     });    
 
                 } else {
+                    console.log('err validation')
                     res.json({ message: "You have entered the wrong password"});   
                 }
             });

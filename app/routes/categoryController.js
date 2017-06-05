@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 
 // invoked for any requested passed to this router
 router.use(function(req, res, next) {
-    console.log('request to palette Category router');
     next();
 });
 
@@ -67,7 +66,6 @@ router.get('/', function(req, res) {
     //implement ancestors if needed
 
     //Save to categories
-    console.log(category);
     category.save().then(res.json({ message: 'Category created succesffully' }));
 });
 

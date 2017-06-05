@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 
 // invoked for any requested passed to this router
 router.use(function(req, res, next) {
-    console.log('request to palette controller router');
     next();
 });
 

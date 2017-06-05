@@ -64,7 +64,6 @@ router.get('/:category', function(req, res, next){
 // Check if token is valid for the next routes
 
 router.post('/newProduct', tokenValidator, function(req, res){
-    console.log(req.headers);
     //GET REQ DETAILS
     var category_id = req.body.category_id;
     var name = req.body.name;
@@ -89,7 +88,6 @@ router.post('/newProduct', tokenValidator, function(req, res){
     
     product.save().then(res.json({message: 'Item created successfully! '}));
     
-    console.log("Item created successfully");//check if immage is being sent
 
 })
 

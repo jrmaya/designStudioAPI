@@ -14,12 +14,8 @@ var UserSchema = new schema(
         lastname: {type: String, required: false},
         school: {type: String, required: false},
         email: {type: String, required: false, unique: true},
-        pass: {type: String, required: false},
-        templates: [
-            {
-                type: mongoose.Schema.Types.ObjectId, ref: 'ProductTemplateSchema'
-            }
-        ],
+        password: {type: String, required: true},
+        templates: [],
         role: {type: String, required: true}
     });
 
