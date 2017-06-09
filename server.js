@@ -6,7 +6,7 @@
 
 var express     = require('express');
 var app         = express(); 
-var port        = process.env.PORT || 4000; //Setup the port
+var port        = process.env.PORT || 8080; //Setup the port
 var mongoose    = require('mongoose'); //db manager
 //var passport    = require('passport');
 //var flash       = require('connect-flash');
