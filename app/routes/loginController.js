@@ -38,13 +38,13 @@ router.post('/', function(req, res){
                     });
                     res.json({
                         success: true,
-                        user: user,
+                        role: user.role,
+                        id: user._id,
                         token: token
                     });    
 
                 } else {
-                    console.log('err validation')
-                    res.json({ message: "You have entered the wrong password"});   
+                    res.json({ message: "You have entered the wrong information"});
                 }
             });
         }
