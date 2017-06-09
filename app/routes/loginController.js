@@ -34,7 +34,6 @@ router.post('/', function(req, res){
         } else {
             bcrypt.compare(req.body.password, user.password, function(err, doesMatch){
                 if(doesMatch){
-                    console.log(user);
                     var token = jwt.sign(user, process.env.SECRET_KEY, {
                     });
                     res.json({
