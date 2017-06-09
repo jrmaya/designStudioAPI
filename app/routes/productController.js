@@ -144,20 +144,6 @@ router.post('/newProduct', tokenValidator, function(req, res){
         send(e);
         res.json({ message: 'Items deleted succesfully' });
     });
-
-/*
-    //Get list of innactive users and delete them
-    var productIds = []
-    var innactive = req.body.product;
-
-        for (var prod in req.body.product) {
-            var x = req.body.product [prod];
-            Product.remove({ '_id': { $in: [x]} }, function(e, product){
-                //res.json({ message: 'Items deleted succesfully' });
-            });
-        }
-        res.json({ message: 'Items deleted succesfully' });
-        */
 });
 
 //Remove multiple from a list ?
