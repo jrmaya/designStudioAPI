@@ -26,12 +26,15 @@ function handleEmail(req, res) {
     var name = req.body.contactName;
     var email = req.body.email;
     var phone = req.body.phone;
+
     var svg = req.body.svg;
 
-    var tableNames = req.body.details.names;
-    var year = req.body.details.year;
+
     var schoolName = req.body.details.school;
+    var year = req.body.details.year;
     var comments = req.body.details.comments;
+
+    var tableNames = req.body.details.names;
 
     var text = `This is a Design Studio email Acc\n\n
     Customer Name: `+name+`
