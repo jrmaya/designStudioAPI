@@ -6,7 +6,7 @@
 
 var express     = require('express');
 var app         = express(); 
-var port        = process.env.PORT || 8080; //Setup the port
+var port        = 8080; //Setup the port
 var mongoose    = require('mongoose'); //db manager
 //var passport    = require('passport');
 //var flash       = require('connect-flash');
@@ -79,7 +79,7 @@ app.use('/email', emailManager);
 
 //Start the server
 //===========================================================================================================
-app.listen(port, "0.0.0.0");
+app.listen(port);
 console.log('Server running on  ' + port);
 
 //export DB to be available to the controllers
