@@ -14,12 +14,20 @@ router.post('/', handleEmail);
 
 function handleEmail(req, res) {
 
-    var smtpConfig = {
+ /*   var smtpConfig = { 
     host: 'official.com.au',
     port: 25,
-    secure: false, // use SSL
+    secure: true, // false
     ignoreTLS: true
-};
+};*/
+
+    var smtpConfig = {
+             service: "Gmail",
+        auth: {
+            user: "officialdesignstudio@gmail.com",
+            pass: "Official!17"
+        }
+    }
 
     var transporter = nodemailer.createTransport(smtpConfig);
 
@@ -29,6 +37,7 @@ function handleEmail(req, res) {
 
     var svg = req.body.svg;
 
+    console.log(req.body);
 
     var schoolName = req.body.details.school;
     var year = req.body.details.year;
