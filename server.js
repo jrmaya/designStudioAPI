@@ -80,7 +80,7 @@ app.use('/email', emailManager);
 //Start the server
 //===========================================================================================================
 app.listen(port);
-console.log('ESTAMOS EN EL PUERTO NO.  ' + port);
+console.log('Node server runing on port:  ' + port);
 
 //export DB to be available to the controllers
 module.exports = mongoose;

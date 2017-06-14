@@ -1,3 +1,0 @@
-node server
-
-http://stackoverflow.com/questions/19619936/how-to-separate-the-routes-and-models-from-app-js-using-nodejs-and-express
