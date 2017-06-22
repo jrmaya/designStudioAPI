@@ -68,11 +68,11 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 
 //==========================================================================================================
 //API ROUTES
-app.use('/categories/', categoryController);
-app.use('/palettes/', paletteController); 
-app.use('/users/', userController);
+app.use('/categories', categoryController);
+app.use('/palettes', paletteController); 
+app.use('/users', userController);
 app.use('/login', loginController);
-app.use('/products/', productController);
+app.use('/products', productController);
 app.use('/email', emailManager);
 
 

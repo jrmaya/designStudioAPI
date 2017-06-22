@@ -97,30 +97,6 @@ router.post('/newProduct', tokenValidator, function(req, res){
         res.json({message:'Image created succesfully', path: path})
 })
 
-
-//UPDATE A PRODUCT 
-.put('/:id', tokenValidator, function(req, res){
-    Product.findById(req.params.id, function(e, product){
-        try{
-        product.name = req.body.name;
-        product.description = req.body.description;
-        product.svg = req.body.svg;
-        product.category_id = req.body.category_id;    
-        product.active = req.body.active;
-
-        product.tags = [];
-        for (var tag in req.body.tags) {
-            var t = req.body.tags[tag];
-            product.tags.push(t);
-        }
-        product.save().then(res.json({message: 'Product updated successfully! '+ product}));
-        }
-        catch(e){
-            res.json({ message: 'There has been an error' } + e);
-        }
-    })
-})
-
 //Remove by id
 .delete('/:id', tokenValidator, function(req, res){
     Product.remove({_id: req.params.id }, function(err, product){
@@ -144,6 +120,30 @@ router.post('/newProduct', tokenValidator, function(req, res){
         send(e);
         res.json({ message: 'Items deleted succesfully' });
     });
+});
+
+//UPDATE A PRODUCT 
+router.put('/:id', tokenValidator, function(req, res){
+    console.log('attempting to put');
+    Product.findById(req.params.id, function(e, product){
+        try{
+        product.name = req.body.name;
+        product.description = req.body.description;
+        product.svg = req.body.svg;
+        product.category_id = req.body.category_id;    
+        product.active = req.body.active;
+
+        product.tags = [];
+        for (var tag in req.body.tags) {
+            var t = req.body.tags[tag];
+            product.tags.push(t);
+        }
+        product.save().then(res.json({message: 'Product updated successfully! '+ product}));
+        }
+        catch(e){
+            res.json({ message: 'There has been an error' } + e);
+        }
+    })
 });
 
 //Remove multiple from a list ?
