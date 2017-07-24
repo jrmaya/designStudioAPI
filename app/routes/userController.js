@@ -100,7 +100,7 @@ router.post('/register-school', function(req, res, next){
     });
 
 // CREATE ADMIN ACCOUNT !!!!
-/*router.post('/new-admin', function(req, res, next){
+router.post('/new-admin', function(req, res, next){
         //Get user details
         var name            = req.body.name;
         var lastname        = req.body.lastname;
@@ -130,7 +130,7 @@ router.post('/register-school', function(req, res, next){
                 });
             }
 
-    });*/
+    });
 
 router.post('/check-email', function(req, res, next) {
     User.findOne({email: req.body.email}, function(err, user){
