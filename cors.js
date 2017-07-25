@@ -1,5 +1,6 @@
 module.exports = function() {
   return function(req, res, next) {
+    console.log(req.headers.origin);
   var allowedOrigins = ['https://www.official.com.au', 'http://localhost:4200'];
   var origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
