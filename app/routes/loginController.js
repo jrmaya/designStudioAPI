@@ -27,15 +27,15 @@ app.use(bodyParser.json());
 //API ROUTES
 
 router.post('/', function(req, res){
-    User.findOne({ "email" : req.body.username }, function(err, user){
+    User.findOne({ "email" : req.body.username }, function(err, user){ 
         if (err) throw err;
         if (!user){
             res.json({ message: "The user couldn't be found" });
         } else {
             bcrypt.compare(req.body.password, user.password, function(err, doesMatch){
                 if(doesMatch){
-                    var token = jwt.sign(user, process.env.SECRET_KEY, {
-                    });
+                    var token = jwt.sign(user.email, process.env.SECRET_KEY, {});
+                    console.log(token);
                     res.json({
                         success: true,
                         role: user.role,
