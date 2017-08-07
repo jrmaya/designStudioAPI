@@ -124,7 +124,6 @@ router.post('/newProduct', tokenValidator, function(req, res){
 
 //UPDATE A PRODUCT 
 router.put('/:id', tokenValidator, function(req, res){
-    console.log('attempting to put');
     Product.findById(req.params.id, function(e, product){
         try{
         product.name = req.body.name;
