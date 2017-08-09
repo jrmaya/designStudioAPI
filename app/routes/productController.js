@@ -70,6 +70,7 @@ router.post('/newProduct', tokenValidator, function(req, res){
     var description = req.body.description;
     var svg = req.body.svg;
     var svgUrl = req.body.svgUrl; //missing
+    var sampleColumns = req.body.sampleColumns;
 
 
     //CREATE A NEW PRODUCT AND SET PARAMS
@@ -80,6 +81,7 @@ router.post('/newProduct', tokenValidator, function(req, res){
     product.svg = svg;
     product.svgUrl = svgUrl;
     product.active = true;
+    product.sampleColumns = sampleColumns;
 
     for (var tag in req.body.tags) {
         var t = req.body.tags[tag];
@@ -131,6 +133,7 @@ router.put('/:id', tokenValidator, function(req, res){
         product.svg = req.body.svg;
         product.category_id = req.body.category_id;    
         product.active = req.body.active;
+        product.sampleColumns = req.body.sampleColumns;
 
         product.tags = [];
         for (var tag in req.body.tags) {
@@ -145,6 +148,5 @@ router.put('/:id', tokenValidator, function(req, res){
     })
 });
 
-//Remove multiple from a list ?
 
 module.exports = router;
