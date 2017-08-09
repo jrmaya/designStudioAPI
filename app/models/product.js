@@ -15,7 +15,7 @@ var ProductTemplateSchema = new schema(
         tags: [String],
         category_id: {type: String, ref: 'CategorySchema'},
         svgUrl: {type: String, require: false}, //Save image url
-        sampleColumns: { type: number, required: false}
+        sampleColumns: { type: Number, required: false}
     }
     
 );
