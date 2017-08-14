@@ -25,7 +25,7 @@ function handleEmail(req, res) {
              service: "Gmail",
         auth: {
             user: "officialdesignstudio@gmail.com",
-            pass: "Official!17"
+            pass: "DesignStudio2017#"
         }
     }
 
