@@ -15,20 +15,26 @@ router.post('/', handleEmail);
 
 function handleEmail(req, res) {
 
- /*   var smtpConfig = { 
-    host: 'official.com.au',
-    port: 25,
-    secure: true, // false
-    ignoreTLS: true
-};*/
-
     var smtpConfig = {
+        host: "smtp-mail.outlook.com", // hostname
+        secureConnection: false, // TLS requires secureConnection to be false
+        port: 587, // port for secure SMTP
+        tls: {
+            ciphers: 'SSLv3'
+        },
+        auth: {
+            user: 'official.com.au@outlook.com',
+            pass: 'Ocpass2014'
+        }
+    };
+
+ /*   var smtpConfig = {
              service: "Gmail",
         auth: {
             user: "officialdesignstudio@gmail.com",
             pass: "DesignStudio2017#"
         }
-    }
+    }*/
 
     //var transporter = nodemailer.createTransport(smtpConfig); 
 
@@ -59,7 +65,7 @@ function handleEmail(req, res) {
     
 
     var mailOptions = {
-        from: 'noreply@official.com.au', // sender address
+        from: 'official.com.au@outlook.com', // sender address
         to: 'it@official.com.au', // list of receivers
         subject: 'Design Studio', // Subject line
         text: text,
