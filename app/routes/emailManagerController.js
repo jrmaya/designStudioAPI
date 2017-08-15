@@ -4,6 +4,7 @@ var router      = express.Router();
 var bodyParser  = require('body-parser'); //to json
 var mongoose    = require('mongoose');
 var nodemailer  = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 //Configure app. to use bodyParser() 
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -29,7 +30,9 @@ function handleEmail(req, res) {
         }
     }
 
-    var transporter = nodemailer.createTransport(smtpConfig);
+    //var transporter = nodemailer.createTransport(smtpConfig); 
+
+    var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
 
     var name = req.body.contactName;
     var email = req.body.email;
