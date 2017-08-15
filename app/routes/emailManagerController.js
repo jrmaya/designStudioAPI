@@ -5,6 +5,7 @@ var bodyParser  = require('body-parser'); //to json
 var mongoose    = require('mongoose');
 var nodemailer  = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+var mg = require('nodemailer-mailgun-transport');
 
 //Configure app. to use bodyParser() 
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -14,6 +15,13 @@ app.use(bodyParser.json());
 router.post('/', handleEmail);
 
 function handleEmail(req, res) {
+
+    var smtpConfig = {
+        auth: {
+            api_key: 'key-9a963c022e0a6906af9e68d9eb3d5c2e',
+            domain: 'sandboxbea5cb7df72d46088911759b469c0a3a.mailgun.org'
+        }
+    }
 
    /* var smtpConfig = {
         host: "smtp-mail.outlook.com", // hostname
@@ -26,7 +34,7 @@ function handleEmail(req, res) {
             user: 'official.com.au@outlook.com',
             pass: 'Ocpass2014'
         }
-    };*/
+    };
 
  var smtpConfig = {
              service: "Gmail",
@@ -34,11 +42,9 @@ function handleEmail(req, res) {
             user: "officialdesignstudio@gmail.com",
             pass: "DesignStudio2017#"
         }
-    }
+    }*/
 
-    //var transporter = nodemailer.createTransport(smtpConfig); 
-
-    var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
+    var transporter = nodemailer.createTransport(mg(smtpConfig));
 
     var name = req.body.contactName;
     var email = req.body.email;
