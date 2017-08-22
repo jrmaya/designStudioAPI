@@ -131,6 +131,7 @@ router.put('/:id', tokenValidator, function(req, res){
         product.name = req.body.name;
         product.description = req.body.description;
         product.svg = req.body.svg;
+        product.svgUrl = req.body.svgUrl;
         product.category_id = req.body.category_id;    
         product.active = req.body.active;
         product.sampleColumns = req.body.sampleColumns;
