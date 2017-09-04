@@ -8,10 +8,10 @@ var fs = require('file-system');
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, 'uploads/')
+    callback(null, 'uploads/polo-templates')
   },
   filename: function (req, file, callback) {
-    callback(null, Date.now() + '.jpeg') //Appending .jpg
+    callback(null, Date.now() + '.png') //Appending .png
   }
 })
 
@@ -93,7 +93,7 @@ router.post('/newProduct', tokenValidator, function(req, res){
 
 })
 
-//UPLOAD LOGO TO SERVER
+// Upload image to server
     .post('/uploadImages', upload.single('image'), function (req, res, next) {
         let path = req.file.path;
         res.json({message:'Image created succesfully', path: path})
@@ -125,8 +125,24 @@ router.post('/newProduct', tokenValidator, function(req, res){
 });
 
 //UPDATE A PRODUCT 
-router.put('/:id', tokenValidator, function(req, res){
-    Product.findById(req.params.id, function(e, product){
+router.put('/:id', tokenValidator, function(req, res) {
+
+    Product.findById(req.params.id, function(e, product) {
+
+        if (product.svgUrl !== '') {
+            try {
+                fs.unlink(product.svgUrl, (err) => {
+                    console.log('attempting to delete!!!!');
+                    if (err) throw err;
+                    console.log('successfully deleted image');
+                });
+
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+
         try{
         product.name = req.body.name;
         product.description = req.body.description;
@@ -141,7 +157,7 @@ router.put('/:id', tokenValidator, function(req, res){
             var t = req.body.tags[tag];
             product.tags.push(t);
         }
-        product.save().then(res.json({message: 'Product updated successfully! '+ product}));
+        product.save().then(res.json({message: 'Product updated! '+ product}));
         }
         catch(e){
             res.json({ message: 'There has been an error' } + e);
