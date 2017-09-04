@@ -19,8 +19,10 @@ router.use(function(req, res, next) {
     next();
 });
 
-// ==============================================================================================================
-//API ROUTES
+/**
+ * Application Routes
+ * 
+ */
 
 //GET ALL CATEGORIES
 router.get('/', function(req, res) {

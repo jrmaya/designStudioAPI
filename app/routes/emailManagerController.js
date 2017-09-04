@@ -23,27 +23,6 @@ function handleEmail(req, res) {
         }
     }
 
-   /* var smtpConfig = {
-        host: "smtp-mail.outlook.com", // hostname
-        secureConnection: false, // TLS requires secureConnection to be false
-        port: 587, // port for secure SMTP
-        tls: {
-            ciphers: 'SSLv3'
-        },
-        auth: {
-            user: 'official.com.au@outlook.com',
-            pass: 'Ocpass2014'
-        }
-    };
-
- var smtpConfig = {
-             service: "Gmail",
-        auth: {
-            user: "officialdesignstudio@gmail.com",
-            pass: "DesignStudio2017#"
-        }
-    }*/
-
     var transporter = nodemailer.createTransport(mg(smtpConfig));
 
     var name = req.body.contactName;
@@ -51,8 +30,6 @@ function handleEmail(req, res) {
     var phone = req.body.phone;
 
     var svg = req.body.svg;
-
-    console.log(req.body);
 
     var schoolName = req.body.details.school;
     var year = req.body.details.year;

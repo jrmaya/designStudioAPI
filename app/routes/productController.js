@@ -132,7 +132,6 @@ router.put('/:id', tokenValidator, function(req, res) {
         if (product.svgUrl !== '') {
             try {
                 fs.unlink(product.svgUrl, (err) => {
-                    console.log('attempting to delete!!!!');
                     if (err) throw err;
                     console.log('successfully deleted image');
                 });
