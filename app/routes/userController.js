@@ -154,12 +154,27 @@ router.put('/:user_id', (req, res) => {
             user.lastname = req.body.lastname;
             user.school = req.body.school;
             user.email = req.body.email;
-            user.pass = req.body.pass;
+            user.password = req.body.pass;
             user.templates = req.body.svg;
 
             user.save().then(res.json({message: 'User updated successfully! '+ user}));
     });
 });
+
+// Change user password /users/id
+// TODO: set temp token with the url
+router.put('/reset/:user_id', (req, res) => {
+    User.find({_id: req.params.user_id}, (err, usuario) => {
+        try{
+            var usuario = new User(usuario);
+            usuario.password = req.body.password;
+            usuario.save().then(res.json({message: 'password changed'})).catch(err);
+        } catch(e) {
+            console.log(e);
+        }
+    });
+});
+
 
 // Add templates
 router.put('/templates/:user_id', tokenValidator, (req, res) => {

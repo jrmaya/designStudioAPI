@@ -59,6 +59,26 @@ router.get('/:category', function(req, res, next){
     })
 });
 
+// GET PRODUCTS BY CATEGORY AND PAGINATE
+router.get('/:category/:page', function(req, res, next) {
+    Product.paginate(
+        {
+            category_id: req.params.category
+        },
+        {
+            sort: {
+                dateCreated: 1
+            },
+            page: req.params.page,
+            limit: 9
+        },
+        function(err, result) {
+            if (err) res.send(err);
+            res.json(result);
+        }
+    )
+});
+
 
 // CREATE A NEW PRODUCT
 // Check if token is valid for the next routes

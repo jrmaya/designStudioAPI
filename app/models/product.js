@@ -1,5 +1,6 @@
 var mongoose    = require('mongoose');
 var schema      = mongoose.Schema;
+var mongoosePaginate = require('mongoose-paginate');
 
 //get categories for product
 var Category    = require('./category');
@@ -19,5 +20,7 @@ var ProductTemplateSchema = new schema(
     }
     
 );
+
+ProductTemplateSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('ProductTemplateSchema', ProductTemplateSchema);
