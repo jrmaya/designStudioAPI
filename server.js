@@ -57,7 +57,7 @@ app.use(bodyParser.json({
     limit: '10mb'
 }));
 
-// TODO: Create a process enviroment variable for the JWT secret 
+// Process enviroment variable for the JWT secret 
 process.env.SECRET_KEY = "Official!15";
 
 

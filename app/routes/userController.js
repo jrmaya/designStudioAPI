@@ -3,7 +3,6 @@ var app         = express();
 var router      = express.Router();
 var bodyParser  = require('body-parser'); //to json
 var mongoose    = require('mongoose');
-
 var bcrypt      = require('bcrypt');
 
 //auth router
@@ -40,6 +39,18 @@ router.get('/users', function(req, res, next) {
 
 });
 
+
+// Serve page to reset usr pass
+/*router.get('/reset/:token', function(req, res) {
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+      console.log(user);
+    if (!user) {
+        console.log('error', 'Password reset token is invalid or has expired.');
+        res.send({message: ''});
+    }
+    res.sendFile('views/resetPassword.html', { root: __dirname });
+  });
+}); */
 
 // Get single user by ID
 router.get('/:user_id', (req, res)=>{
@@ -150,31 +161,89 @@ router.put('/:user_id', (req, res) => {
         User.findById(req.params.user_id, (error, user) => {
         if(error) res.send(error);
 
-            user.name = req.body.name;
-            user.lastname = req.body.lastname;
-            user.school = req.body.school;
-            user.email = req.body.email;
-            user.password = req.body.pass;
-            user.templates = req.body.svg;
+            user.name = 'BORRAME';
+            user.lastname = user.lastname;
+            user.school = user.school;
+            user.email = user.email;
+            user.password = 'margarito';
+            user.templates = ['quterdrp'];
 
             user.save().then(res.json({message: 'User updated successfully! '+ user}));
     });
 });
 
-// Change user password /users/id
-// TODO: set temp token with the url
-router.put('/reset/:user_id', (req, res) => {
-    User.find({_id: req.params.user_id}, (err, usuario) => {
-        try{
-            var usuario = new User(usuario);
-            usuario.password = req.body.password;
-            usuario.save().then(res.json({message: 'password changed'})).catch(err);
-        } catch(e) {
-            console.log(e);
-        }
+
+
+/**
+ * 
+ * CHANGE USER PASSWORD
+ * 
+ */
+
+// Generate temp token to reset pssword & send email
+
+// Router to assign a temp. token to the user to reset password
+router.post('/forgot', (req, res) => {
+    try {
+        User.findOne({ email: req.body.email }, function (err, user) {
+            if (err) { res.message(err) }
+            if (user !== null) {
+                // Create token 
+                var token = jwt.sign({
+                    data: req.body.email
+                }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                // Save token and exp in usr schema
+                user.resetPasswordToken = token;
+                user.resetPasswordExp = Date.now() + 3600000; // 1h.
+                user.save().then(
+                    res.json({
+                        userId: user._id,
+                        email: user.email,
+                        token: token
+                    })
+                )
+            } else {
+                res.json({ message: 'User not found' });
+            }
+        });
+
+    } catch (error) {
+        res.json({error: error});
+    }
+});
+
+// Return all the users that have a token to reset password
+router.post('/resetPasswordUsers', (req, res) => {
+    // Get users that want to reset pass.
+    User.find({ 'resetPasswordToken': { $exists: true } }, function(err, user) {
+        if(err) res.send(err);
+        res.send(user);
     });
 });
 
+// Reset password
+router.put('/reset/:token', tokenValidator, (req, res) => {
+    var pass = req.body.password;
+    User.findOne({ resetPasswordToken: req.params.token }, (error, user) => {
+        var tokenExpire = user.resetPasswordExpires;
+        if (Date.now() > tokenExpire) {
+            res.json({ message: 'Password reset token is invalid or has expired.' })
+        }
+        else {
+            user.password = user.generateHash(pass);
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExp = undefined;
+            user.save().then(res.json({ message: 'User updated successfully! ' + user }));
+        }
+
+    });
+});
+
+/**
+ * 
+ * Manage user templates
+ * 
+ */
 
 // Add templates
 router.put('/templates/:user_id', tokenValidator, (req, res) => {

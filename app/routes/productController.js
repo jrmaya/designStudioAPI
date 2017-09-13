@@ -149,6 +149,7 @@ router.put('/:id', tokenValidator, function(req, res) {
 
     Product.findById(req.params.id, function(e, product) {
 
+        // Delete prev. stored image in the server
         if (product.svgUrl !== '') {
             try {
                 fs.unlink(product.svgUrl, (err) => {

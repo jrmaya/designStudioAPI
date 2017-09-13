@@ -16,7 +16,9 @@ var UserSchema = new schema(
         email: {type: String, required: false, unique: true},
         password: {type: String, required: true},
         templates: [],
-        role: {type: String, required: true}
+        role: {type: String, required: true},
+        resetPasswordToken: {type: String, required: false},
+        resetPasswordExp: {type: String, required: false}
     });
 
 /*UserSchema.pre('save', function(next) {
@@ -36,7 +38,9 @@ var UserSchema = new schema(
 UserSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
 };
-
+UserSchema.methods.resetPass = function (password) {
+    return password;
+}
 
 UserSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
