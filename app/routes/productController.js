@@ -156,7 +156,6 @@ router.put('/:id', tokenValidator, function(req, res) {
                     if (err) throw err;
                     console.log('successfully deleted image');
                 });
-
             } catch (e) {
                 console.log(e);
             }
