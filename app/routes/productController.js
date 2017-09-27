@@ -144,22 +144,25 @@ router.post('/newProduct', tokenValidator, function(req, res){
     });
 });
 
+// DELETE ALL PRODUCT SVG.URL
+
 //UPDATE A PRODUCT 
 router.put('/:id', tokenValidator, function(req, res) {
 
     Product.findById(req.params.id, function(e, product) {
 
         // Delete prev. stored image in the server
-        if (product.svgUrl !== '') {
+        
+       /*if (product.svgUrl !== '') {
             try {
                 fs.unlink(product.svgUrl, (err) => {
                     if (err) throw err;
                     console.log('successfully deleted image');
                 });
             } catch (e) {
-                console.log(e);
+                console.log('huy Problemon:  '+ e);
             }
-        }
+       }*/
 
 
         try{
