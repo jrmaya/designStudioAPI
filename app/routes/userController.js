@@ -39,27 +39,23 @@ router.get('/users', function(req, res, next) {
 
 });
 
-
-// Serve page to reset usr pass
-/*router.get('/reset/:token', function(req, res) {
-    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
-      console.log(user);
-    if (!user) {
-        console.log('error', 'Password reset token is invalid or has expired.');
-        res.send({message: ''});
-    }
-    res.sendFile('views/resetPassword.html', { root: __dirname });
-  });
-}); */
-
 // Get single user by ID
-router.get('/:user_id', (req, res)=>{
+router.get('/:user_id', tokenValidator, (req, res)=>{
     User.findById(req.params.user_id, (e, user)=>{
         if(e)
             res.send(e);
             res.json(user);
     });
 });
+
+// Get user email by Id
+router.get('/userEmail/:user_id', tokenValidator, (req, res) => {
+    User.findById(req.params.user_id, (err, user) => {
+        if(err)
+            res.send(err)
+        res.send(user.email);
+    })
+})
 
 // Get user templates
 router.get('/userDesigns/:user_id', tokenValidator, (req, res) => {
@@ -161,12 +157,12 @@ router.put('/:user_id', (req, res) => {
         User.findById(req.params.user_id, (error, user) => {
         if(error) res.send(error);
 
-            user.name = 'BORRAME';
+            user.name = user.name;
             user.lastname = user.lastname;
             user.school = user.school;
             user.email = user.email;
-            user.password = 'margarito';
-            user.templates = ['quterdrp'];
+            // user.password = 'margarito';
+            // user.templates = ['quterdrp'];
 
             user.save().then(res.json({message: 'User updated successfully! '+ user}));
     });
