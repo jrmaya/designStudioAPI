@@ -64,6 +64,7 @@ process.env.SECRET_KEY = "Official!15";
 
 //Midelware to serve public folder with static files
 app.use('/uploads', express.static(__dirname + '/uploads'));
+app.use('/files', express.static(__dirname + '/files'));
 
 
 //==========================================================================================================

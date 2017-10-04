@@ -153,7 +153,7 @@ router.put('/:id', tokenValidator, function(req, res) {
 
         // Delete prev. stored image in the server
         
-       /*if (product.svgUrl !== '') {
+       if (product.svgUrl !== '') {
             try {
                 fs.unlink(product.svgUrl, (err) => {
                     if (err) throw err;
@@ -162,7 +162,7 @@ router.put('/:id', tokenValidator, function(req, res) {
             } catch (e) {
                 console.log('huy Problemon:  '+ e);
             }
-       }*/
+       }
 
 
         try{

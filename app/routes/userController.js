@@ -49,11 +49,15 @@ router.get('/:user_id', tokenValidator, (req, res)=>{
 });
 
 // Get user email by Id
-router.get('/userEmail/:user_id', (req, res) => {
+router.get('/userEmail/:user_id', tokenValidator, (req, res) => {
     User.findById(req.params.user_id, (err, user) => {
         if(err)
             res.send(err)
-        res.send(user.email);
+        var details =  {
+            "name": user.name,
+            "email":  user.email
+        }
+        res.send(details);
     })
 })
 
