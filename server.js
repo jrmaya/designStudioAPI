@@ -80,7 +80,7 @@ app.use('/email', emailManager);
 
 //Start the server
 //===========================================================================================================
-app.listen(port);
+app.listen(port, '0.0.0.0');
 console.log('DS API running on port number . . .  ' + port);
 
 //export DB to be available to the controllers
