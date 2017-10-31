@@ -67,7 +67,8 @@ router.get('/:category/:page', function(req, res, next) {
         },
         {
             sort: {
-                dateCreated: 1
+                dateCreated: 1,
+                name: 1
             },
             page: req.params.page,
             limit: 9
@@ -151,18 +152,17 @@ router.put('/:id', tokenValidator, function(req, res) {
 
     Product.findById(req.params.id, function(e, product) {
 
-        // Delete prev. stored image in the server
-        
-       if (product.svgUrl !== '') {
+    // Delete prev. stored image in the server
+      /* if (product.svgUrl !== '') {
             try {
                 fs.unlink(product.svgUrl, (err) => {
                     if (err) throw err;
                     console.log('successfully deleted image');
-                });
+                })
             } catch (e) {
-                console.log('huy Problemon:  '+ e);
+                console.log('The image to delete was not found  '+ e);
             }
-       }
+       }*/
 
 
         try{
